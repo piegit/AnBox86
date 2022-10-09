@@ -10,7 +10,7 @@ A script to install box86/box64 and wine/wine64 on a termux proot for arm64 Andr
 
 3- Copy/paste these commands into Termux
 ```bash
-curl https://raw.githubusercontent.com/WheezyE/AnBox86/main/AnBox86_64.sh | bash
+curl https://raw.githubusercontent.com/piegit/AnBox86/main/AnBox86_64.sh | bash
 ```
 
 4- In Termux, type `./launch_anbox86-64.sh` to launch AnBox86_64
