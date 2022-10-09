@@ -70,37 +70,37 @@ function run_InjectSecondStageInstaller()
 			
 			# Compile box64 & box86 on-device (takes a long time, builds are fresh and links less breakable)
 				## Install a Python3(?) dependency (a box86_64 compiling dependency) without prompts (prompts will freeze our 'eot' commands)
-				#export DEBIAN_FRONTEND=noninteractive
-				#ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
-				#sudo apt-get install -y tzdata
-				#sudo dpkg-reconfigure --frontend noninteractive tzdata
+				export DEBIAN_FRONTEND=noninteractive
+				ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+				sudo apt-get install -y tzdata
+				sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 				## Build and install box64
-				#sudo apt install git cmake python3 build-essential gcc -y # box64 dependencies
-				#git clone https://github.com/ptitSeb/box64
-				#sh -c "cd box64 && mkdir build; cd build; cmake .. -DARM_DYNAREC=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo; make && make install"
-				#sudo rm -rf box64
+				sudo apt install git cmake python3 build-essential gcc -y # box64 dependencies
+				git clone https://github.com/ptitSeb/box64
+				sh -c "cd box64 && mkdir build; cd build; cmake .. -DARM_DYNAREC=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo; make && make install"
+				sudo rm -rf box64
 
 				## Build and install box86 (for aarch64)
-				#sudo apt install gcc-arm-linux-gnueabihf git cmake python3 build-essential gcc -y
-				#git clone https://github.com/ptitSeb/box86
-				#sh -c "cd box86 && mkdir build; cd build; cmake .. -DARM_DYNAREC=ON -DRPI4ARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo; make && make install"
-				#sudo rm -rf box86
+				sudo apt install gcc-arm-linux-gnueabihf git cmake python3 build-essential gcc -y
+				git clone https://github.com/ptitSeb/box86
+				sh -c "cd box86 && mkdir build; cd build; cmake .. -DARM_DYNAREC=ON -DRPI4ARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo; make && make install"
+				sudo rm -rf box86
 
 			# Download and install box64 & box86 (fast, but builds can be old and links could break)
 				# RPi4ARM64 builds for box64 & box86 seem to work on AArch64 Termux Debian PRoot
 				# Box86/box64 binaries are from GitHub "Actions" build artifacts, linked to via www.nightly.link
 				# TODO: Add error checking and compile is link is broken
 				sudo apt install p7zip-full wget git -y
-				wget https://nightly.link/ptitSeb/box64/actions/artifacts/148608519.zip #box64 (RPI4ARM64)
-				wget https://nightly.link/ptitSeb/box86/actions/artifacts/148607181.zip #box86 (RPI4ARM64)
-				7z x 148608519.zip -o"/usr/local/bin/" #extract box64 to /usr/local/bin/box64
-				7z x 148607181.zip -o"/usr/local/bin/" #extract box86 to /usr/local/bin/box86
-				sudo chmod +x /usr/local/bin/box64 /usr/local/bin/box86 #make the extracted files executable
+				# wget https://nightly.link/ptitSeb/box64/actions/artifacts/148608519.zip #box64 (RPI4ARM64)
+				# wget https://nightly.link/ptitSeb/box86/actions/artifacts/148607181.zip #box86 (RPI4ARM64)
+				# 7z x 148608519.zip -o"/usr/local/bin/" #extract box64 to /usr/local/bin/box64
+				# 7z x 148607181.zip -o"/usr/local/bin/" #extract box86 to /usr/local/bin/box86
+				# sudo chmod +x /usr/local/bin/box64 /usr/local/bin/box86 #make the extracted files executable
 				# Also install extra box86 i386 & box64 x86_64 libraries
 				git clone https://github.com/ptitSeb/box64.git; mkdir -p /usr/lib/x86_64-linux-gnu/ && cp box64/x64lib/* /usr/lib/x86_64-linux-gnu/
 				git clone https://github.com/ptitSeb/box86.git; mkdir -p /usr/lib/i386-linux-gnu/ && cp box86/x86lib/* /usr/lib/i386-linux-gnu/
-				rm -rf box64/ box86/ 148608519.zip 148607181.zip
+				# rm -rf box64/ box86/ 148608519.zip 148607181.zip
 			
 			# Install amd64-wine (64-bit) and i386-wine (32-bit)
 			#TODO: Go through this dependencies list and weed out un-needed libraries.
