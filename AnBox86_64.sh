@@ -78,13 +78,13 @@ function run_InjectSecondStageInstaller()
 				## Build and install box64
 				sudo apt install git cmake python3 build-essential gcc -y # box64 dependencies
 				git clone https://github.com/ptitSeb/box64
-				sh -c "cd box64 && mkdir build; cd build; cmake .. -DARM_DYNAREC=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo; make && make install"
+				sh -c "cd box64 && mkdir build; cd build; cmake .. -DARM_DYNAREC=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo; make -j$(nproc) && make install"
 				sudo rm -rf box64
 
 				## Build and install box86 (for aarch64)
 				sudo apt install gcc-arm-linux-gnueabihf git cmake python3 build-essential gcc -y
 				git clone https://github.com/ptitSeb/box86
-				sh -c "cd box86 && mkdir build; cd build; cmake .. -DARM_DYNAREC=ON -DRPI4ARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo; make && make install"
+				sh -c "cd box86 && mkdir build; cd build; cmake .. -DARM_DYNAREC=ON -DRPI4ARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo; make -j$(nproc) && make install"
 				sudo rm -rf box86
 
 			# Download and install box64 & box86 (fast, but builds can be old and links could break)
